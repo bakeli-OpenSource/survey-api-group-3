@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\SondageController;
+use App\Http\Controllers\UtilisateurController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +18,22 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::get('/', function () {
+    return 'welcom';
+});
+
+Route::post('/register', [UtilisateurController::class, 'register']);
+Route::post('/login', [UtilisateurController::class, 'login']);
+
+Route::middleware('auth:sanctum')->group(function() {
+    Route::get('/utilisateurs', [UtilisateurController::class, 'index']);
+    Route::post('sondage/create', [SondageController::class, 'store']);
+    Route::get('/sondage/liste', [SondageController::class, 'sondage']);
+    Route::get('/sondage/{sondage}', [SondageController::class, 'singleSondage']);
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+    
 });
