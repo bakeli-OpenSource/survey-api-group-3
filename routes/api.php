@@ -29,7 +29,7 @@ Route::post('/login', [UtilisateurController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function() {
     Route::get('/utilisateurs', [UtilisateurController::class, 'index']);
-    Route::post('sondage/create', [SondageController::class, 'store']);
+    Route::post('/sondage/create', [SondageController::class, 'store']);
     Route::get('/sondage/liste', [SondageController::class, 'sondage']);
     Route::get('/sondage/{sondage}', [SondageController::class, 'singleSondage']);
     Route::get('/user', function (Request $request) {

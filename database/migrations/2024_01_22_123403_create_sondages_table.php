@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('sondages', function (Blueprint $table) {
             $table->id();
             $table->string('titre');
-            $table->string('contenu');
+            $table->json('contenu');
             $table->timestamps();
         });
     }

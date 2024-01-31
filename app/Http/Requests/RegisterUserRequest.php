@@ -24,10 +24,11 @@ class RegisterUserRequest extends FormRequest
     public function rules(): array
         {
             return [
-                'name' => 'required',
-                'email' => 'required|unique:utilisateurs,email',
-                'password' => 'required',
-                'telephone' => 'required|unique:utilisateurs,password'
+                'name' => 'required|string',
+                'email' => 'required|email|unique:utilisateurs,email',
+                'telephone' => 'required|unique:utilisateurs,telephone',
+                'password' => 'required|min:4',
+                
             ];           
         }
     
@@ -46,11 +47,14 @@ class RegisterUserRequest extends FormRequest
         {
             return [
                 'name.required' => "Le nom est obligatoire",
-                'email.required'=> "L'email est obligatoire",
-                'email.unique'=> "cette email existe déjà",
-                'password.required' => "Le mot de passe est obligatoire",
+                'name.string' => "nom invalide",
+                'email.required' => "L'email est obligatoire",
+                'email.email' => "email invalide",
+                'email.unique' => "cette email existe déjà",
                 'telephone.required' => "Le numero de tetephone est obligatoire",
-                'password.unique'=> "mot de passe invalide"
+                'telephone.unique' => "numéro de téléphone existant",
+                'password.required' => "Le mot de passe est obligatoire",
+                'password.min' => "nombre de caractères minimum: 4"
             ];
             
         }

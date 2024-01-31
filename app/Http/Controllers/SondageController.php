@@ -10,14 +10,14 @@ use Illuminate\Support\Facades\Auth;
 
 class SondageController extends Controller
 {
-    //pour la cr"ation d'un sondage
+    //pour la création d'un sondage
     public function store(CreateSondageRequest $request)
     {
         try 
         {
         $sondage = new Sondage();
         $sondage->titre = $request->titre;
-        $sondage->contenu = $request->contenu;
+        $sondage->contenu = json_encode($request->contenu);
         $sondage->utilisateur_id = Auth::user()->id;
         $sondage->save();
 
@@ -61,7 +61,8 @@ class SondageController extends Controller
             return response()->json([
             'status_code' => 200,
             'status_message' => "sondage généré",
-            'sondage' => $son
+            'titre' => $son->titre,
+            'contenu' => explode(',', $son->contenu)
             
         ]);
 
