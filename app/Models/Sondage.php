@@ -16,6 +16,10 @@ class Sondage extends Model
         'utilisateur_id'
     ];
 
+    // protected $casts = [
+    //     'contenu' => 'array'
+    //   ];
+
     protected function contenu(): Attribute
     {
         return Attribute::make(
