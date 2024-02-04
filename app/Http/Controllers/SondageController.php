@@ -25,7 +25,7 @@ class SondageController extends Controller
             'status_code' => 200,
             'status_message' => "Sondage créé avec succès",
             'sondage' => $sondage,
-            'lien' => url("api/sondage/{$sondage->id}")
+            'link' => url("api/sondage/{$sondage->id}")
             
         ]);
 
