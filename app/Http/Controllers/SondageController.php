@@ -28,8 +28,8 @@ class SondageController extends Controller
             return response()->json([
                 'status_code' => 200,
                 'status_message' => "Sondage créé avec succès",
-                'sondage' => $sondage,
-                'lien' => url("api/sondage/{$sondage->id}")
+                'sondage' => $sondage
+                
 
             ]);
         } catch (Exception $e) {
@@ -46,7 +46,8 @@ class SondageController extends Controller
                 'status_code' => 200,
                 'status_message' => "dernier sondage créé",
                 'titre' => $sond->titre,
-                'contenu' => json_decode($sond->contenu)
+                'contenu' => json_decode($sond->contenu),
+                'lien' => url("api/sondage/{$sond->id}")
 
             ]);
         } catch (Exception $e) {
@@ -72,9 +73,10 @@ class SondageController extends Controller
     }
 
 
+
     //liste des sondages associés à l'utilisateur connecté
     public function sondages()
-    {
+     {
         try {
             $sondages = Sondage::where('utilisateur_id', Auth::user()->id)->get();
             $result = [];
@@ -100,7 +102,7 @@ class SondageController extends Controller
                 'status_message' => 'Internal Server Error',
                 'error' => $e->getMessage(),
             ], 500);
-        }
+        }       
     }
 
     //pour partager le lien du sondage par mail
