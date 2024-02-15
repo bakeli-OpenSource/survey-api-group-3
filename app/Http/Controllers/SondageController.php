@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateSondageRequest;
+use App\Http\Requests\ReponseSondageRequest;
+use App\Http\Requests\ResultatSondageRequest;
 use App\Mail\SondageMail;
+use App\Models\Reponse;
+use App\Models\Resultat;
 use App\Models\Sondage;
 use App\Models\Utilisateur;
 use Exception;
@@ -55,6 +59,26 @@ class SondageController extends Controller
         }
     }
 
+    //pour le traitement des sondages
+    public function reponse(ReponseSondageRequest $request)
+    {
+        try {
+            $reponse = new Reponse();
+            $reponse->choix = json_encode($request->choix);
+            $reponse->save();
+
+            return response()->json([
+                'status_code' => 200,
+                'status_message' => "success",
+                'sondage' => $reponse
+                
+
+            ]);
+        } catch (Exception $e) {
+            return response()->json($e);
+        }
+    }
+
     //retourne le sondage selectionné 
     public function show(Sondage $sondage)
     {
@@ -72,7 +96,36 @@ class SondageController extends Controller
         }
     }
 
+    //pour afficher tous les sondages
+    public function allSondages()
+     {
+        try {
+            $sondages = Sondage::all();
+            $result = [];
 
+            foreach ($sondages as $sondage) {
+                $titre = $sondage->titre;
+                $contenu = json_decode($sondage->contenu);
+
+                $result[] = [
+                    'titre' => $titre,
+                    'contenu' => $contenu,
+                ];
+            }
+
+            return response()->json([
+                'status_code' => 200,
+                'status_message' => "Liste des sondages",
+                'sondages' => $result
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'status_code' => 500,
+                'status_message' => 'Internal Server Error',
+                'error' => $e->getMessage(),
+            ], 500);
+        }       
+    }
 
     //liste des sondages associés à l'utilisateur connecté
     public function sondages()

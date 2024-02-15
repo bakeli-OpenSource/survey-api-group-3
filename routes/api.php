@@ -27,6 +27,7 @@ Route::get('/', function () {
 Route::post('/register', [UtilisateurController::class, 'register']);
 Route::post('/login', [UtilisateurController::class, 'login']);
 Route::get('/sondage/{sondage}', [SondageController::class, 'show']);
+Route::post('/sondage/reponse', [SondageController::class, 'reponse']);
 
 
 Route::middleware('auth:sanctum')->group(function() {
